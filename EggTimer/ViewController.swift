@@ -58,6 +58,7 @@ class ViewController: UIViewController {
         titleLabel.font = .boldSystemFont(ofSize: 30)
         stopTimerButton.isHidden = true
         stopTimerButton.layer.cornerRadius = 15
+        timeLeft.font = .boldSystemFont(ofSize: 40)
 
         
         //rounded edges on progress bar
@@ -73,13 +74,15 @@ class ViewController: UIViewController {
         if progressBar.progress == 0 //fixes bug where you can start two Timers at the same time!
         {
             timer.invalidate() //invalidate timer before it starts a new one on pressing button
+            titleLabel.font = .boldSystemFont(ofSize: 50)
             let hardness = sender.currentTitle! //soft, medium., hard
             totalTime  = eggTime[hardness]! //force unwrap as we're confident of the spelling set total time to egg
 
             progressBar.setProgress(0, animated: true) //set progress back to zero
             secondsPassed = 0
-            titleLabel.text = "\(hardness) eggs coming up!" //set hardness to egg
             titleLabel.font = .boldSystemFont(ofSize: 30)
+            titleLabel.text = "\(hardness) eggs coming up!" //set hardness to egg
+
 
             timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
 
@@ -119,8 +122,9 @@ class ViewController: UIViewController {
             playSound(soundName: "alarm_sound")
             stopTimerButton.isHidden = false
             timeLeft.text = ""
+            timeLeft.font = .boldSystemFont(ofSize: 40)
 
-//PLAY SOUND
+//FLASH ANIMATION
 
             UIView.animate(withDuration: 0.5, delay: 0.25, options: [.repeat, .autoreverse], animations: {
                 self.titleLabel.alpha = 0
